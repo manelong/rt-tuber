@@ -1,0 +1,65 @@
+task: detection
+
+evaluator:
+  type: CocoEvaluator
+  iou_types: ['bbox', ]
+
+num_classes: 24
+# remap_mscoco_category: True
+
+
+train_dataloader: 
+  type: DataLoader
+  dataset: 
+    type: NewbasketballDetection
+    img_folder: data/ucf24-101
+    ann_file: UCF101v2-GT.pkl
+    # return_masks: False
+    opt:
+      dataset: newbasketball
+      split: 1
+      root_dir: /data/lijun/model/rt_tuber_code
+      K: 16
+      max_size: 640
+      mode: 'train'
+      input_h: 256
+      input_w: 256
+      slow_fast_alpha: 8
+
+
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: True
+  num_workers: 32
+  drop_last: True 
+  collate_fn:
+    type: BatchImageCollateFuncion
+
+
+# val_dataloader:
+#   type: DataLoader
+#   dataset: 
+#     type: NewbasketballDetection
+#     img_folder: data/ucf24-101
+#     ann_file: UCF101v2-GT.pkl
+#     # return_masks: False
+#     opt:
+#       dataset: newbasketball
+#       split: 1
+#       root_dir: /data/lijun/model/rt_tuber_code
+#       K: 16
+#       max_size: 640
+#       mode: 'test'
+#       input_h: 256
+#       input_w: 256
+#       slow_fast_alpha: 8
+
+#     transforms:
+#       type: Compose
+#       ops: ~
+#   shuffle: True
+#   num_workers: 32
+#   drop_last: True 
+#   collate_fn:
+#     type: BatchImageCollateFuncion
